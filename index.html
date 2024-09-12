@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <style>
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" />
+        <span id="emailError" class="error"></span><br><br>
+
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" />
+        <span id="passwordError" class="error"></span><br><br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+    <span id="formStatus"></span>
+
+    <script>
+        // Email validation onChange function
+        function validateEmail() {
+            const emailInput = document.getElementById('email').value;
+            const emailError = document.getElementById('emailError');
+            const formStatus = document.getElementById('formStatus');
+            
+            if (emailInput.length > 3 && emailInput.includes('@') && emailInput.includes('.')) {
+                emailError.textContent = ''; 
+                checkFormCompletion(); 
+            } else {
+                emailError.textContent = 'Invalid email';
+                formStatus.textContent = ''; 
+            }
+        }
+
+        // Password validation onChange function
+        function validatePassword() {
+            const passwordInput = document.getElementById('password').value;
+            const passwordError = document.getElementById('passwordError');
+            const formStatus = document.getElementById('formStatus');
+            
+            if (passwordInput.length > 8) {
+                passwordError.textContent = '';
+                checkFormCompletion(); 
+            } else {
+                passwordError.textContent = 'Password must be more than 8 characters';
+                formStatus.textContent = ''; 
+            }
+        }
+
+        // Check if both email and password are valid
+        function checkFormCompletion() {
+            const emailInput = document.getElementById('email').value;
+            const passwordInput = document.getElementById('password').value;
+            const formStatus = document.getElementById('formStatus');
+
+            if (emailInput.length > 3 && emailInput.includes('@') && emailInput.includes('.') && passwordInput.length > 8) {
+                formStatus.textContent = 'All good to go!';
+                formStatus.className = 'success'; 
+            } else {
+                formStatus.textContent = ''; 
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('signupForm').addEventListener('submit', function (event) {
+            event.preventDefault(); 
+            const isConfirmed = confirm('Are you sure you want to sign up?');
+            
+            if (isConfirmed) {
+                alert('Successful Signup!');
+            } else {
+                window.location.reload();
+            }
+        });
+
+        // Attach onChange event listeners
+        document.getElementById('email').addEventListener('input', validateEmail);
+        document.getElementById('password').addEventListener('input', validatePassword);
+    </script>
+</body>
+</html>
